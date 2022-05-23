@@ -6,11 +6,11 @@ import { GoogleSignInComponent } from './google-sign-in.component';
   declarations: [
     GoogleSignInComponent
   ],
-  exports: [
-    GoogleSignInComponent
-  ],
   imports: [
     CommonModule
+  ],
+  exports: [
+    GoogleSignInComponent
   ]
 })
 export class GoogleSignInModule {

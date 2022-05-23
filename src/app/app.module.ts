@@ -14,7 +14,6 @@ import { GoogleSignInModule } from './modules/google-sign-in/google-sign-in.modu
     BrowserModule,
     GoogleSignInModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {
