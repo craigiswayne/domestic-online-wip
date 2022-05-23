@@ -1,8 +1,10 @@
 import { Component, HostListener, Inject } from '@angular/core';
 import { GoogleSignInResponse } from './google-sign-in-response.interface';
 import { GoogleSignInSettings } from './google-sign-in.settings';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+
+type CustomWindow = WindowProxy & typeof globalThis & {onGoogleSignIn?: (resp: GoogleSignInResponse) => void};
 
 @Component({
   selector: 'app-google-sign-in',
@@ -15,7 +17,7 @@ export class GoogleSignInComponent {
   public readonly credentials$ = new Subject<GoogleSignInResponse>()
 
   private readonly customEventName = GoogleSignInSettings.CustomEventName
-  private readonly window: (WindowProxy & typeof globalThis) | null;
+  private readonly window: CustomWindow | null;
 
   @HostListener('window:onGoogleSignInEvent', ['$event'])
   onGoogleSignInEvent(resp: CustomEvent<GoogleSignInResponse>) {
@@ -24,18 +26,28 @@ export class GoogleSignInComponent {
 
   constructor(@Inject(DOCUMENT) private readonly document: Document) {
     this.window = this.document.defaultView;
-    this.addClientLibraryCallback$();
-    this.injectClientLibraryScript$();
+    this.addClientLibraryCallback$().then(() => {
+      this.injectClientLibraryScript$();
+    });
+
   }
 
   private async addClientLibraryCallback$(): Promise<void> {
-    // @ts-ignore
-    this.window['onGoogleSignIn'] = (resp: GoogleSignInResponse): void => {
-      if (this.window === null) {
-        return;
+    return new Promise((resolve, reject) => {
+      if(this.window === null){
+        return reject();
       }
-      this.window.dispatchEvent(new CustomEvent(this.customEventName, {detail: resp}));
-    }
+
+      this.window.onGoogleSignIn = (resp: GoogleSignInResponse): void => {
+        if (this.window === null) {
+          return;
+        }
+        this.window.dispatchEvent(new CustomEvent(this.customEventName, {detail: resp}));
+      }
+
+      return resolve();
+    })
+
   }
 
   private async injectClientLibraryScript$(): Promise<void> {
