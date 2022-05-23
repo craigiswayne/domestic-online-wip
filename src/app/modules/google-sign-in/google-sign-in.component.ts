@@ -4,7 +4,7 @@ import { GoogleSignInSettings } from './google-sign-in.settings';
 import { Subject } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 
-type CustomWindow = WindowProxy & typeof globalThis & {onGoogleSignIn?: (resp: GoogleSignInResponse) => void};
+type CustomGoogleWindow = WindowProxy & typeof globalThis & {onGoogleSignIn?: (resp: GoogleSignInResponse) => void};
 
 @Component({
   selector: 'app-google-sign-in',
@@ -17,7 +17,7 @@ export class GoogleSignInComponent {
   public readonly credentials$ = new Subject<GoogleSignInResponse>()
 
   private readonly customEventName = GoogleSignInSettings.CustomEventName
-  private readonly window: CustomWindow | null;
+  private readonly window: CustomGoogleWindow | null;
 
   @HostListener('window:onGoogleSignInEvent', ['$event'])
   onGoogleSignInEvent(resp: CustomEvent<GoogleSignInResponse>) {
@@ -51,14 +51,14 @@ export class GoogleSignInComponent {
   }
 
   private async injectClientLibraryScript$(): Promise<void> {
-    const id = 'googleSignIn';
 
-    if(this.document.head.querySelector(`#${id}`) !== null){
+    if(this.document.head.querySelector(`#${GoogleSignInSettings.ClientLibraryScripTagID}`) !== null){
       return;
     }
 
     const scriptTag = this.document.createElement('script');
-    scriptTag.id = id;
+    scriptTag.id = GoogleSignInSettings.ClientLibraryScripTagID;
+    scriptTag.src = GoogleSignInSettings.ClientLibraryScriptSrc;
     scriptTag.src = GoogleSignInSettings.ClientLibraryScriptSrc;
     scriptTag.async = true;
     scriptTag.defer = true;
