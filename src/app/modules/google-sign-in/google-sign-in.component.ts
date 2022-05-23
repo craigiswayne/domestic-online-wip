@@ -59,9 +59,6 @@ export class GoogleSignInComponent {
     const scriptTag = this.document.createElement('script');
     scriptTag.id = GoogleSignInSettings.ClientLibraryScripTagID;
     scriptTag.src = GoogleSignInSettings.ClientLibraryScriptSrc;
-    scriptTag.src = GoogleSignInSettings.ClientLibraryScriptSrc;
-    scriptTag.async = true;
-    scriptTag.defer = true;
     this.document.head.appendChild(scriptTag);
   }
 
