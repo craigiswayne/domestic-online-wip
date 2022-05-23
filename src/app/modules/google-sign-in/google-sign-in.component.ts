@@ -10,18 +10,16 @@ import { DOCUMENT } from '@angular/common';
 })
 export class GoogleSignInComponent {
 
-  public callbackMethodName = 'onGoogleSignIn';
+  public callbackMethodName = GoogleSignInSettings.CallbackMethodName;
   public clientID = GoogleSignInSettings.ClientID;
   public readonly credentials$ = new Subject<GoogleSignInResponse>()
-  public readonly isAuthenticated$ = new BehaviorSubject(false);
 
+  private readonly customEventName = GoogleSignInSettings.CustomEventName
   private readonly window: (WindowProxy & typeof globalThis) | null;
-  private readonly customEventName = 'onGoogleSignInEvent'
 
   @HostListener('window:onGoogleSignInEvent', ['$event'])
   onGoogleSignInEvent(resp: CustomEvent<GoogleSignInResponse>) {
     this.credentials$.next(resp.detail);
-    this.isAuthenticated$.next(true);
   }
 
   constructor(@Inject(DOCUMENT) private readonly document: Document) {
