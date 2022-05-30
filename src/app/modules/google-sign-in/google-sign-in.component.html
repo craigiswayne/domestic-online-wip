@@ -5,13 +5,17 @@
      [attr.data-callback]="callbackMethodName"
      data-auto_select="true">
 </div>
-
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="rectangular"
-     data-theme="outline"
-     data-text="signin_with"
-     data-size="large"
-     data-logo_alignment="left">
+<div *ngIf="enablePersonalizedSignInButton"
+  class="g_id_signin"
+  data-type="standard"
+  data-shape="rectangular"
+  data-theme="outline"
+  data-text="signin_with"
+  data-size="large"
+  data-logo_alignment="left">
 </div>
-<pre *ngIf="(credentials$ | async) as signInResult">{{signInResult | json}}</pre>
+<ng-container *ngIf="(credentialResponse$ | async) as response">
+  <pre>{{response | json}}</pre>
+</ng-container>
+<pre *ngIf="(decodedToken$ | async) as decodedToken">{{decodedToken | json}}</pre>
+

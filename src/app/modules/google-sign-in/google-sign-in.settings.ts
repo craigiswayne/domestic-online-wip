@@ -1,7 +1,6 @@
-export const GoogleSignInSettings = {
+export const GoogleSignInDefaults = {
   ClientLibraryScriptSrc: 'https://accounts.google.com/gsi/client',
   ClientLibraryScripTagID: 'googleSignIn',
-  ClientID: '953189047584-7e9u388fcbc1l130fbkid908vbm9h2b5.apps.googleusercontent.com',
   /**
    * This is the method that is invoked after the sign in succeeds
    */
@@ -10,4 +9,8 @@ export const GoogleSignInSettings = {
    * Triggered when the callback is invoked
    */
   CustomEventName: 'onGoogleSignInEvent'
+}
+
+export interface GoogleSignInSettings {
+  clientID: string;
 }
