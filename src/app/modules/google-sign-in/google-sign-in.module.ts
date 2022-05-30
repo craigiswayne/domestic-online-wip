@@ -17,6 +17,10 @@ import { GoogleSignInService } from './google-sign-in.service';
 })
 export class GoogleSignInModule {
 
+  /**
+   * @link https://angular.io/guide/singleton-services
+   * @param parentModule
+   */
   constructor(@Optional() @SkipSelf() parentModule?: GoogleSignInModule) {
     if (parentModule) {
       throw new Error(
