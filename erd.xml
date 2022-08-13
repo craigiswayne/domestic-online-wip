@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE company [
+  <!ELEMENT company (companyname|address|department)*>
+  <!ELEMENT companyname (#PCDATA)>
+  <!ELEMENT address (#PCDATA)>
+  <!ELEMENT department (dname|deptphoneno|deptfaxno|deptemail|employee|contractemployee)*>
+  <!ELEMENT dname (#PCDATA)>
+  <!ELEMENT deptphoneno (#PCDATA)>
+  <!ELEMENT deptfaxno (#PCDATA)>
+  <!ELEMENT deptemail (#PCDATA)>
+  <!ELEMENT employee (empid|ename|emailid|phoneno)*>
+  <!ELEMENT empid (#PCDATA)>
+  <!ELEMENT ename (#PCDATA)>
+  <!ELEMENT emailid (#PCDATA)>
+  <!ELEMENT phoneno (#PCDATA)>
+  <!ELEMENT contractemployee (name|phoneno)*>
+  <!ELEMENT name (#PCDATA)>
+  ]>
+<company>
+  <companyname></companyname>
+  <address></address>
+  <department>
+    <dname></dname>
+    <deptphoneno></deptphoneno>
+    <deptfaxno></deptfaxno>
+    <deptemail></deptemail>
+    <employee>
+      <empid></empid>
+      <ename></ename>
+      <emailid></emailid>
+      <phoneno></phoneno>
+    </employee>
+    <contractemployee>
+      <name></name>
+      <phoneno></phoneno>
+    </contractemployee>
+  </department>
+</company>

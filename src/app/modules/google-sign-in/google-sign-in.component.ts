@@ -54,6 +54,11 @@ export class GoogleSignInComponent {
     private readonly service: GoogleSignInService,
     @Inject(DOCUMENT) private readonly document: Document) {
     this.window = this.document.defaultView;
+
+    if(!this.window){
+      return;
+    }
+    // TODO: better error checking for null window
     this.addClientLibraryCallback$().then(() => {
       this.injectClientLibraryScript$();
     });
